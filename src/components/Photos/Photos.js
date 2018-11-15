@@ -5,7 +5,6 @@ const renderPhotos = photos => {
 };
 
 const Photos = props => {
-  console.log(props);
   return (
     <ul>
       {props.photoList ? (

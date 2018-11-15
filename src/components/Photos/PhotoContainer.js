@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import Photos from "./Photos";
+import { connect } from "react-redux";
+import { receivePhotos } from "../../actions";
 
-export default class PhotoContainer extends Component {
-  state = {
-    photos: []
-  };
-
+class PhotoContainer extends Component {
   componentDidMount() {
     fetch("http://jsonplaceholder.typicode.com/photos?_limit=30", {
       method: "get"
@@ -13,11 +11,29 @@ export default class PhotoContainer extends Component {
       .then(response => {
         return response.json();
       })
-      .then(photos => this.setState({ photos }))
+      .then(photos => this.props.receivePhotos(photos))
       .catch(error => console.log(error));
   }
 
   render() {
-    return <Photos photoList={this.state.photos} />;
+    console.log(this.props.photos);
+    return <Photos photoList={this.props.photos} />;
   }
 }
+
+function mapStateToProps({ photos }) {
+  return {
+    photos
+  };
+}
+
+function mapDispatchToProps() {
+  return {
+    receivePhotos
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PhotoContainer);
