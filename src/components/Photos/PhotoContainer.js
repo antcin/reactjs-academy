@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Photos from "./Photos";
 
 export default class PhotoContainer extends Component {
   state = {
@@ -12,11 +13,11 @@ export default class PhotoContainer extends Component {
       .then(response => {
         return response.json();
       })
-      .then(photos => console.log(JSON.stringify(photos)))
+      .then(photos => this.setState({ photos }))
       .catch(error => console.log(error));
   }
 
   render() {
-    return <ul>{this.state.photos}</ul>;
+    return <Photos photoList={this.state.photos} />;
   }
 }
